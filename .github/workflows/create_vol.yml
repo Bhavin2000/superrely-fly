@@ -5,6 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl volumes create gun_data --size 1 --region bom --app rely-file-storage-added
+      
+      # Ensure app exists first
+      - run: flyctl apps create superrely-fly --org personal || echo "App might already exist"
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      # Create volume for 'superrely-fly'
+      - run: flyctl volumes create gun_data --size 1 --region bom --app superrely-fly
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
