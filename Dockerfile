@@ -1,5 +1,5 @@
 # Use Node 20 (Compatible with Helia/IPFS deps you have)
-FROM node:20
+FROM node:20-alpine
 
 # Set working directory
 WORKDIR /app
