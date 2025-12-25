@@ -13,8 +13,8 @@ const gun = Gun({
     file: 'data'
 });
 
-server.listen(8765, () => {
+server.listen(8765, '0.0.0.0', () => {
     console.log('---------------------------------------');
-    console.log('✅ Relay is running at http://localhost:8765/gun');
+    console.log('✅ Relay is running at http://0.0.0.0:8765/gun');
     console.log('---------------------------------------');
 });
