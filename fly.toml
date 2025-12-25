@@ -4,18 +4,19 @@ primary_region = "bom"
 [build]
   dockerfile = "Dockerfile"
 
-# This connects the volume you created (Crucial!)
 [mounts]
   source = "gun_data"
   destination = "/app/data"
 
+# THIS IS THE NEW FIX
+[deploy]
+  strategy = "immediate"
+
 [[services]]
-  # CHANGE THIS: Match your code's port
   internal_port = 8765
   protocol = "tcp"
-  
-  # Prevent the app from sleeping (Gun needs to stay awake)
-  auto_stop_machines = false
+  # Set this to true to let Fly manage the machines
+  auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 1
 
