@@ -8,15 +8,15 @@ primary_region = "bom"
   source = "gun_data"
   destination = "/app/data"
 
-# THIS IS THE NEW FIX
+# This is the most important part!
 [deploy]
   strategy = "immediate"
 
 [[services]]
   internal_port = 8765
   protocol = "tcp"
-  # Set this to true to let Fly manage the machines
-  auto_stop_machines = true
+  # Simplified settings to avoid conflicts
+  auto_stop_machines = false
   auto_start_machines = true
   min_machines_running = 1
 
