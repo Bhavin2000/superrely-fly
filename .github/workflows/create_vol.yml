@@ -1,0 +1,10 @@
+name: Create Volume
+on: workflow_dispatch
+jobs:
+  create-vol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl volumes create gun_data --size 1 --region bom --app rely-file-storage-added
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
