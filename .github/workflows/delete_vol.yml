@@ -1,0 +1,12 @@
+name: Delete Old Volume
+on: workflow_dispatch
+jobs:
+  delete-vol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      
+      # This command deletes the specific unused volume ID
+      - run: flyctl volumes destroy vol_rk1kkl2jwg1xpg64 --yes
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
