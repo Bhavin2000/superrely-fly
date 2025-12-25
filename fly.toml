@@ -1,19 +1,20 @@
 app = "superrely-fly"
 primary_region = "bom"
 
-# 1. Tells Fly to use your Alpine Dockerfile
 [build]
   dockerfile = "Dockerfile"
 
-# 2. Connects your 1GB volume to the folder where Gun saves data
+# This connects the volume you created (Crucial!)
 [mounts]
   source = "gun_data"
   destination = "/app/data"
 
-# 3. Defines the port and ensures the app stays running (doesn't sleep)
 [[services]]
+  # CHANGE THIS: Match your code's port
   internal_port = 8765
   protocol = "tcp"
+  
+  # Prevent the app from sleeping (Gun needs to stay awake)
   auto_stop_machines = false
   auto_start_machines = true
   min_machines_running = 1
@@ -26,7 +27,6 @@ primary_region = "bom"
     handlers = ["tls", "http"]
     port = 443
 
-# 4. Sets memory to 512MB (Safer for free tier than 1GB)
 [[vm]]
   memory = "512mb"
   cpu_kind = "shared"
