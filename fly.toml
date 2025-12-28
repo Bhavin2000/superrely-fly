@@ -2,32 +2,37 @@ app = "superrely-fly"
 primary_region = "bom"
 
 [build]
-dockerfile = "Dockerfile"
+  dockerfile = "Dockerfile"
 
+# Strategy "immediate" is required for Volumes
 [deploy]
-strategy = "immediate"
+  strategy = "immediate"
 
-[[mounts]]
-destination = "/app/data"
-source = "gun_data"
+# Use [mounts] for the volume connection
+[mounts]
+  source = "gun_data"
+  destination = "/app/data"
 
 [[services]]
-internal_port = 8765
-protocol = "tcp"
+  internal_port = 8765
+  protocol = "tcp"
 
-auto_start_machines = true
-auto_stop_machines = true
-min_machines_running = 0
-
-  [[services.ports]]
-  handlers = ["http"]
-  port = 80
+  # SCALE TO ZERO SETTINGS
+  # The machine will turn off when no one is connected via WebSocket/HTTP
+  auto_start_machines = true
+  auto_stop_machines = true
+  min_machines_running = 0
 
   [[services.ports]]
-  handlers = ["tls", "http"]
-  port = 443
+    handlers = ["http"]
+    port = 80
 
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+# LOW MEMORY SETTINGS
 [[vm]]
-cpu_kind = "shared"
-cpus = 1
-memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
+  memory = "256mb"
