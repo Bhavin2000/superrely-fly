@@ -4,11 +4,10 @@ primary_region = "bom"
 [build]
   dockerfile = "Dockerfile"
 
-# Strategy "immediate" is required for Volumes
 [deploy]
   strategy = "immediate"
 
-# Use [mounts] for the volume connection
+# FIX IS HERE: Single brackets [ ] 
 [mounts]
   source = "gun_data"
   destination = "/app/data"
@@ -16,9 +15,8 @@ primary_region = "bom"
 [[services]]
   internal_port = 8765
   protocol = "tcp"
-
-  # SCALE TO ZERO SETTINGS
-  # The machine will turn off when no one is connected via WebSocket/HTTP
+  
+  # Your "Sleep Mode" settings
   auto_start_machines = true
   auto_stop_machines = true
   min_machines_running = 0
@@ -31,8 +29,7 @@ primary_region = "bom"
     handlers = ["tls", "http"]
     port = 443
 
-# LOW MEMORY SETTINGS
 [[vm]]
   cpu_kind = "shared"
   cpus = 1
-  memory = "256mb"
+  memory = "256mb"  # This is fine! It changes RAM, not storage.
