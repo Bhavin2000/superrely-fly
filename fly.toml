@@ -1,38 +1,23 @@
-app = "superrely-fly"
-primary_region = "bom"
+# fly.toml app configuration file generated for superrely-fly on 2025-12-28T13:33:32Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'superrely-fly'
+primary_region = 'bom'
 
 [build]
-  dockerfile = "Dockerfile"
 
-# Strategy "immediate" is required for Volumes
-[deploy]
-  strategy = "immediate"
-
-# Use [mounts] for the volume connection
-[mounts]
-  source = "gun_data"
-  destination = "/app/data"
-
-[[services]]
-  internal_port = 8765
-  protocol = "tcp"
-
-  # SCALE TO ZERO SETTINGS
-  # The machine will turn off when no one is connected via WebSocket/HTTP
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
-  auto_stop_machines = true
   min_machines_running = 0
+  processes = ['app']
 
-  [[services.ports]]
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
-
-# LOW MEMORY SETTINGS
 [[vm]]
-  cpu_kind = "shared"
+  memory = '1gb'
+  cpu_kind = 'shared'
   cpus = 1
-  memory = "256mb"
+  memory_mb = 512
